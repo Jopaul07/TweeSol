@@ -1,0 +1,328 @@
+<html>
+        
+        <head>
+          <script src="/javascripts/jq.min.js"></script>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+          <!-- Our Custom CSS -->
+          <link rel="stylesheet" href="stylesheets/style4.css">
+          <script>
+            window.twttr = (function (d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+              if (d.getElementById(id)) return t;
+              js = d.createElement(s);
+              js.id = id;
+              js.src = "https://platform.twitter.com/widgets.js";
+              fjs.parentNode.insertBefore(js, fjs);
+        
+              t._e = [];
+              t.ready = function (f) {
+                t._e.push(f);
+              };
+        
+              return t;
+            }(document, "script", "twitter-wjs"));
+          </script>
+          <script>
+            function postn(path, params, method) {
+              method = method || "post"; // Set method to post by default if not specified.
+        
+              // The rest of this code assumes you are not using a library.
+              // It can be made less wordy if you use one.
+              var form = document.createElement("form");
+              form.setAttribute("method", method);
+              form.setAttribute("action", path);
+        
+              for (var key in params) {
+                if (params.hasOwnProperty(key)) {
+                  var hiddenField = document.createElement("input");
+                  hiddenField.setAttribute("type", "hidden");
+                  hiddenField.setAttribute("name", key);
+                  hiddenField.setAttribute("value", params[key]);
+        
+                  form.appendChild(hiddenField);
+                }
+              }
+        
+              document.body.appendChild(form);
+              form.submit();
+            }
+          </script>
+        </head>
+        
+        <body>
+        
+          <nav class="navbar navbar-default navbar-fixed-top custom-nav" id="navid">
+            <div class="container-fluid">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                  aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"></a>
+              </div>
+        
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <!-- li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li-->
+                  <div class="row">
+        
+                    <div class="col-md-4">
+                      <span style="color: navy;font-size: 2em;font-family:sans-serif">
+                        <li> Welcome </li>
+                      </span>
+                    </div>
+                    <div class="col-md-4">
+                      <span style="color: crimson;font-size: 2em;margin-left:1em;">
+                        <%- username %>
+                      </span>
+                    </div>
+                  </div>
+        
+        
+                </ul>
+        
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <a href="" id="logout">Log out</a>
+                  </li>
+        
+        
+                </ul>
+              </div>
+              <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+          </nav>
+        
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <div style="height:14em">
+                  <div itemprop="image" class="profile-cover-background">
+                  </div>
+                </div>
+              </div>
+        
+            </div>
+            <div class="row">
+        
+              <div class="wrapper">
+                <!-- Sidebar Holder -->
+                <nav id="sidebar">
+                  <ul class="list-unstyled components" id="menu-list">
+                    <li class="active" id="home-menu">
+                      <a href="htest">
+                        <i class="glyphicon glyphicon-home"></i>
+                        Home
+                        <span id="badge-id" class="badge custom-badge">4</span>
+        
+                      </a>
+        
+                    </li>
+                    <li id="camp-menu">
+                      <a href="campaigns">
+                        <i class="glyphicon glyphicon-briefcase"></i>
+                        Campaigns
+                      </a>
+                    </li>
+                    <li id="item-menu">
+                      <a href="items">
+                        <i class="glyphicon glyphicon-duplicate"></i>
+                        Items
+                      </a>
+        
+                    </li>
+                    <li id="cat-menu">
+                      <a href="cat">
+                        <i class="glyphicon glyphicon-link"></i>
+                        Categories
+                      </a>
+                    </li>
+                    <li id="faq-menu">
+                      <a href="#">
+                        <i class="glyphicon glyphicon-paperclip"></i>
+                        FAQ
+                      </a>
+                    </li>
+                    <li id="contact-menu">
+                      <a href="#">
+                        <i class="glyphicon glyphicon-send"></i>
+                        Contact
+                      </a>
+                    </li>
+                  </ul>
+        
+        
+                </nav>
+        
+                <!-- Page Content Holder -->
+                <div id="content" class="cont-style">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item ">
+                      <span style="color:darkcyan;font-weight: bold;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Home</span>
+                    </li>
+                  </ol>
+                  <div class="container">
+                    <div class="col-md-3">
+                      <div id="tag_list">
+                        <span>
+        
+                          <div id="twitboxnew">
+                            <div class="row">
+                              <input type="text" id="twitid" placeholder="Enter Twitter id here.." style="width: 19em;color:cadetblue;"></input>
+                            </div>
+                            <div class="row" class="new_button">
+                              <button id="twitid_but" type="button" style="margin-left: 2em;margin-top:10px; margin-bottom:1em ;color:cadetblue;">Add new recepient</button>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <form action="/upl" id="uploadForm" enctype="multipart/form-data" method="post">
+                              <input type="file" name="userFile" />
+                              <input type="submit" id="upfile" value="Upload File" name="submit">
+                            </form>
+                          </div>
+                          <div id="headtwitid">
+                            <h3>Twitter-ID</h3>
+                          </div>
+                          <% for (var i = 0; i < twitids.length; i++) { %>
+                            <li>
+                              <%-twitids[i]%>
+        
+                            </li>
+                            <% } %>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div id="twitbox">
+                        <div class="row">
+                          <textarea id="tweetbody" rows="6" cols="40" placeholder="Enter Tweet here.."></textarea>
+                        </div>
+                        <div class="row" class="new_button">
+                          <button id="tweet_but" type="button" style="margin-left: 6em;margin-top:1em;color:cadetblue;  ">create Tweet</button>
+                        </div>
+                      </div>
+                      <div id="headtweet">
+                        <h3>Tweets</h3>
+                      </div>
+                      <div id="tweet_list">
+                        <% for (var i = 0; i < tweets.length; i++) { %>
+                          <li class="tlist">
+                            <%-tweets[i]%>
+                              <button type="button" class="tweetListItem" id="tweet_<%- i %>">del</button>
+                          </li>
+                          <% } %>
+                      </div>
+                    </div>
+                    <div class="col-md-5" id="timeline" style="margin-top: 1em">
+                      <!-- timeline of user -->
+                      <div class="row" id="cont_area" style="height:55em;">
+                        <div id="timel" class="col-sm-12">
+                          <div id="timeLine">
+                            <script>
+                              twttr.ready(function (twttr) {
+                                twttr.ready(function (twttr) {
+                                  twttr.widgets.createTimeline(
+                                    {
+                                      sourceType: 'profile',
+                                      screenName: 'jopaul_jn'
+                                    },
+                                    document.getElementById('timeLine'),
+                                    {
+                                      width: '650',
+                                      height: '800',
+        
+                                      chrome: 'noscrollbar',
+        
+                                    }).then(function (el) {
+                                      console.log('Embedded a timeline.')
+                                    });
+                                });
+                              });
+                            </script>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+        
+        
+        
+              </div>
+            </div>
+          </div>
+        
+          </div>
+          <!-- jQuery CDN -->
+          <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+          <script src="/javascripts/htest.js"></script>
+          <!-- Bootstrap Js CDN -->
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.8-fix/jquery.nicescroll.min.js"></script>
+          <script>
+                              $(document).ready(function () {
+                                $('#logout').click(function () {
+                                  window.location = '/sessions/finish';
+                                });
+        
+                                $('#twitid_but').click(function () {
+                                  var twitid = $('#twitid').val();
+                                  console.log(twitid);
+        
+        
+                                  $.post("/twitid", { twitidn: twitid }, function (response) {
+        
+                                    window.location = "/home";
+        
+                                  })
+        
+                                })
+        
+        
+                                $('#tweet_but').click(function () {
+                                  var tweet_name = $('#tweetname').val();
+                                  var tweet_body = $('#tweetbody').val();
+                                  $.post("/tweet", { tweetname: tweet_name, tweetbody: tweet_body }, function (response) {
+        
+                                    window.location = "/home";
+        
+                                  })
+                                });
+                                $('#upfile').click(function () {
+                                  post('/upl', {name: 'Johnny Bravo',enctype:"multipart/form-data"});
+                                });
+                                $('.tweetListItem').click(function () {
+                                  var id = $(this).attr('id');
+                                  var clickedBtn = $('#' + id);
+        
+                                  console.log($(clickedBtn[0]).parent(".tlist")[0].childNodes[0].nodeValue.trim());
+                                  var del_tweet = $(clickedBtn[0]).parent(".tlist")[0].childNodes[0].nodeValue.trim();
+                                  $.ajax({
+                                    url: "/tweets",
+                                    type: 'DELETE',
+                                    data: { "tweetcont": del_tweet },
+                                    success: function (result) {
+                                      window.location = "/home";
+                                    },
+                                    error: function (err) {
+                                      console.log(err);
+                                    }
+                                  });
+                                });
+                              });
+          </script>
+        </body>
+        
+        </html>

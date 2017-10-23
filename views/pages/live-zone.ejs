@@ -1,0 +1,208 @@
+<html>
+
+<head>
+    <script src="/javascripts/jq.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="stylesheets/style4.css">
+    <script>
+        window.twttr = (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function (f) {
+                t._e.push(f);
+            };
+
+            return t;
+
+        }(document, "script", "twitter-wjs"));
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top custom-nav" id="navid">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <!-- li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li-->
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <span style="color: navy;font-size: 2em;font-family:sans-serif">
+                                <li> Welcome </li>
+                            </span>
+                        </div>
+                        <div class="col-md-4">
+                            <span style="color: crimson;font-size: 2em;margin-left:1em;">
+                                <%- username %>
+                            </span>
+                        </div>
+                    </div>
+
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <button id="logout" class="btn btn-lg btn-danger btn-block btn-signin" style="width:8em;">Log out</button>
+                    </li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="height:14em">
+                    <div itemprop="image" class="profile-cover-background">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="wrapper">
+                <!-- Sidebar Holder -->
+                <nav id="sidebar">
+                    <ul class="list-unstyled components" id="menu-list">
+                        <li id="home-menu">
+                            <a href="home">
+                                <i class="glyphicon glyphicon-home"></i>
+                                Home
+                                <span id="badge-id" class="badge custom-badge">4</span>
+
+                            </a>
+
+                        </li>
+                        <li class="active" id="camp-menu">
+                            <a href="live-zone">
+                                <i class="glyphicon glyphicon-briefcase"></i>
+                                Live-Zone
+                            </a>
+                        </li>
+                        
+                        <li id="faq-menu">
+                            <a href="">
+                                <i class="glyphicon glyphicon-paperclip"></i>
+                                FAQ
+                            </a>
+                        </li>
+                        <li id="contact-menu">
+                            <a href="">
+                                <i class="glyphicon glyphicon-send"></i>
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
+
+
+                </nav>
+
+                <!-- Page Content Holder -->
+                <div id="content" class="cont-style">
+
+                    <div class="row" style="background-color:lightsteelblue;margin-bottom: 20px;">
+                        <div class="col-md-6">
+                            <h3>Tweet Update Process Controls:</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <button id="starttweeting" class="btn btn-lg btn-success btn-block btn-signin" style="margin: 10px;width:8em;">start</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button id="stoptweeting" class="btn btn-lg btn-success  btn-block btn-signin" style="margin: 10px;width:8em;">stop</button>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="col-md-8" id="timeline" style="margin-top: 1em">
+                            <blockquote class="twitter-tweet" data-lang="en" style="box-sizing: content-box">
+                                <p lang="en" dir="ltr">just setting up my twttr.Write spmething so that i can see the column lenght increases as
+                                    i write more data .so keep the fck up write some bullshit.</p>&mdash; Jack (@jack) SS
+                            </blockquote>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2"></div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <!-- jQuery CDN -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script> 
+      var socket = io();
+    </script>
+
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="/javascripts/htest.js"></script>
+    <!-- Bootstrap Js CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.8-fix/jquery.nicescroll.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#logout').click(function () {
+                window.location = '/sessions/finish';
+            });
+            $('#starttweeting').click(function () {
+                $.ajax({
+                    url: "/home/tweeting",
+                    type: 'get',
+                    success: function (result) {
+                        window.location = "/home";
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+            $('#stoptweeting').click(function () {
+                $.ajax({
+                    url: "/home/tweestop",
+                    type: 'get',
+                    success: function (result) {
+                        window.location = "/home";
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

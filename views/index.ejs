@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="/javascripts/jq.min.js"></script>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to TweeSOL!</p>
+    <button id="login">log In </button>
+  <script>
+    $(document).ready(function(){
+      $('#login').click(function(){
+        window.location='/sessions/connect';
+      });
+    });
+    
+</script>
+
+  </body>
+</html>

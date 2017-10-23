@@ -1,0 +1,373 @@
+<html>
+
+<head>
+  <script src="/javascripts/jq.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" href="stylesheets/style4.css">
+  <script>
+    window.twttr = (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function (f) {
+        t._e.push(f);
+      };
+
+      return t;
+
+    }(document, "script", "twitter-wjs"));
+  </script>
+</head>
+
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top custom-nav" id="navid">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+          aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"></a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <!-- li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li-->
+          <div class="row">
+
+            <div class="col-md-4">
+              <span style="color: navy;font-size: 2em;font-family:sans-serif">
+                <li> Welcome </li>
+              </span>
+            </div>
+            <div class="col-md-4">
+              <span style="color: crimson;font-size: 2em;margin-left:1em;">
+                <%- username %>
+              </span>
+            </div>
+          </div>
+
+
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <button id="logout" class="btn btn-lg btn-danger btn-block btn-signin" style="width:8em;">Log out</button>
+          </li>
+
+
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div style="height:14em">
+          <div itemprop="image" class="profile-cover-background">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+          <ul class="list-unstyled components" id="menu-list">
+            <li class="active" id="home-menu">
+              <a href="htest">
+                <i class="glyphicon glyphicon-home"></i>
+                Home
+                <span id="badge-id" class="badge custom-badge">4</span>
+
+              </a>
+
+            </li>
+            <li id="camp-menu">
+              <a href="live-zone">
+                <i class="glyphicon glyphicon-briefcase"></i>
+                Live-Zone
+              </a>
+            </li>
+
+            <li id="faq-menu">
+              <a href="">
+                <i class="glyphicon glyphicon-paperclip"></i>
+                FAQ
+              </a>
+            </li>
+            <li id="contact-menu">
+              <a href="">
+                <i class="glyphicon glyphicon-send"></i>
+                Contact
+              </a>
+            </li>
+          </ul>
+
+
+        </nav>
+
+        <!-- Page Content Holder -->
+        <div id="content" class="cont-style">
+
+          <div class="row" style="background-color:lightsteelblue;margin-bottom: 20px;">
+            <div class="col-md-6">
+              <h3>Tweet Update Process Controls:</h3>
+            </div>
+            <div class="col-md-2">
+              <button id="starttweeting" class="btn btn-lg btn-success btn-block btn-signin" style="margin: 10px;width:8em;">start</button>
+            </div>
+            <div class="col-md-2">
+              <div id="loader">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="lading"></div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <button id="stoptweeting" class="btn btn-lg btn-success  btn-block btn-signin" style="margin: 10px;width:8em;">stop</button>
+            </div>
+          </div>
+          <div class="container">
+            <div class="col-md-6">
+              <div id="tag_list">
+                <div id="twitboxnew">
+                  <div class="row">
+
+                    <input type="text" id="twitid" placeholder="Enter Twitter id here.." class=" form-control" required autofocus style="width:16em;"></input>
+
+                  </div>
+                  <div class="row" class="new_button">
+                    <button id="twitid_but" type="button" class="btn btn-lg btn-info btn-block" style="margin: 10px;width:11em;">Add new recepient</button>
+                  </div>
+                </div>
+                <div class="row" style="margin-left: 4em;">OR</div>
+                <div class="row">
+                  <h4>Upload a CSV file:-</h4>
+                </div>
+                <div class="row">
+                  <form id="uploadForm" enctype="multipart/form-data" method="post">
+                    <div class="row  col-md-5">
+                      <input type="file" name="userFile" class="btn"></input>
+                    </div>
+                    <div class="col-md-7" style="margin-top:6px;">
+                      <input type="submit" id="upfile" class="btn btn-sm" value="Upload File" name="submit">
+                    </div>
+                  </form>
+                </div>
+                <div class="row" id="headtwitid" style="margin-top: 1em;">
+                  <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="item-table">
+                      <thead>
+                        <tr class="alert alert-info">
+                          <th>
+                            <h4 style="font-weight: bolder;font-family: Courier New, Courier, monospace;">Twitter-ID's</h4>
+                          </th>
+                          <th>
+
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <% for (var i = 0; i < twitids.length; i++) { %>
+                          <tr style="font-weight: bolder;font-family: Courier New, Courier, monospace;">
+                            <td>
+                              <%-twitids[i].screen_name%>
+                            </td>
+                            <td>
+                              <button type="button" class="twitListItem btn btn-sm btn-danger" id="twitid_<%- twitids[i]._id %>">
+                                <span class="glyphicon glyphicon-trash"></span>
+                              </button>
+                            </td>
+                          </tr>
+                          <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div id="twitbox">
+                <div class="row">
+                  <textarea id="tweetbody" rows="6" cols="40" placeholder="Enter Tweet here.." class="form-control"></textarea>
+                </div>
+                <div class="row" class="new_button">
+                  <button id="tweet_but" type="button" class="btn btn-lg btn-info btn-block" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 100px;width:14em;">create Tweet</button>
+                </div>
+              </div>
+
+              <div id="tweet_list" style="margin-top:10px;">
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover" id="item-table">
+                    <thead>
+                      <tr class="alert alert-info">
+                        <th>
+                          <h4 style="font-weight: bolder;font-family: Courier New, Courier, monospace;">Tweets</h4>
+                        </th>
+                        <th>
+
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <% for (var i = 0; i < tweets.length; i++) { %>
+                        <tr style="font-weight: bolder;font-family: Courier New, Courier, monospace">
+                          <td>
+                            <%-tweets[i].tweetcont%>
+                          </td>
+                          <td>
+                            <button type="button" class="tweetListItem btn btn-sm btn-danger" id="tweet_<%- tweets[i]._id %>">
+                              <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+
+                          </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <!-- jQuery CDN -->
+  <!-- socket test -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script> 
+    var socket = io();
+  </script>
+  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script src="/javascripts/htest.js"></script>
+  <!-- Bootstrap Js CDN -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.8-fix/jquery.nicescroll.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#logout').click(function () {
+        window.location = '/sessions/finish';
+      });
+
+      $('#twitid_but').click(function () {
+        var twitid = $('#twitid').val();
+        console.log(twitid);
+
+
+        $.post("/twitid", { twitidn: twitid }, function (response) {
+
+          window.location = "/home";
+
+        })
+
+      })
+
+
+      $('#tweet_but').click(function () {
+        var tweet_name = $('#tweetname').val();
+        var tweet_body = $('#tweetbody').val();
+        $.post("/tweet", { tweetname: tweet_name, tweetbody: tweet_body }, function (response) {
+
+          window.location = "/home";
+
+        })
+      });
+      $('#upfile').click(function () {
+        post('/home', { enctype: "multipart/form-data" });
+      });
+      $('.twitListItem').click(function () {
+        var del_twitid = $(this).attr('id').replace("twitid_", "");
+        console.log(del_twitid);
+        $.ajax({
+          url: "/twitids",
+          type: 'DELETE',
+          data: { "twitid": del_twitid },
+          success: function (result) {
+            window.location = "/home";
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      })
+      $('.tweetListItem').click(function () {
+        var del_tweet = $(this).attr('id').replace("tweet_", "");
+        $.ajax({
+          url: "/tweets",
+          type: 'DELETE',
+          data: { "tweetcont": del_tweet },
+          success: function (result) {
+            window.location = "/home";
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      });
+      $('#starttweeting').click(function () {
+        $.ajax({
+          url: "/home/tweeting",
+          type: 'get',
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      });
+      $('#stoptweeting').click(function () {
+        $.ajax({
+          url: "/home/tweestop",
+          type: 'get',
+          success: function (result) {
+            window.location = "/home";
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
