@@ -25,12 +25,6 @@ var consumer = new oauth.OAuth(
 
 var Twitter = require('twit');
 
-var twitterClient = new Twitter({
-  consumer_key: _twitterConsumerKey,
-  consumer_secret: _twitterConsumerSecret,
-  access_token: '888704998632153088-2pJuP64k029qi4VjblP1v22uZRvT4ze',
-  access_token_secret: '36sFaCwAAvs6aRgeocRMhgbs4R0puyL4XWLm4TVXGmH8L'
-});
 
 //upload code
 //upload var..
@@ -42,15 +36,6 @@ var storage = multer.diskStorage({
     callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
   }
 })
-
-/** testing IO 
- */
-io.on('connection', function (socket) {
-  console.log('A user connected!!!!!!!!!!!!!!!!!!!!!!!!');
-  socket.on('disconnect', function () {
-    console.log('user disconnected!!!!!!!!!!!!!!');
-  });
-});
 
 router.get('/upl', (req, res, next) => {
   res.render('upload');
@@ -227,11 +212,15 @@ router.get('/live-zone', function (req, res, next) {
 
 });
 
+var stream = {};
+var uname = {};
+var nsp={};
 router.get('/home', function (req, res) {
   let user = req.session.loggedInUser;
   if (!user) {
     return res.redirect('/');
   }
+  let ownerID = req.session.loggedInUser._id;
   var at = user.access_token.token;
   var ats = user.access_token.secret;
   twitterClients[user._id] = new Twitter({
@@ -240,6 +229,7 @@ router.get('/home', function (req, res) {
     access_token: at,
     access_token_secret: ats
   });
+  uname[user._id] = user.username;
   var td = [];
   var tw = [];
   Twitid
@@ -268,7 +258,22 @@ router.get('/home', function (req, res) {
           })
       }
     });
-
+  stream[ownerID] = twitterClients[ownerID].stream('user', { track: [user.username] });
+  stream[ownerID].on('connected', function (response) {
+    console.log("A connection established!..");
+  })
+  stream[ownerID].on('tweet', function (tweet) {
+    console.log(tweet.text);
+    console.log(tweet.user.name);
+    nsp[ownerID] = io.of('/'+user.username);
+    nsp[ownerID].on('connection', function (socket) {
+      console.log( user.username + 'connected');
+    });
+    nsp[ownerID].emit('hi', user.username);
+  })
+  stream[ownerID].on('error', function (error) {
+    console.log(error);
+  });
 });
 var twitterClients = {};
 var cronJobs = {};
