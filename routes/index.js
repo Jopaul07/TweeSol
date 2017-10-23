@@ -231,7 +231,7 @@ router.get('/home', function (req, res) {
   var td = [];
   var tw = [];
   Twitid
-    .find({ owner: user._id}, { limit: 20 }, function (err, tids) {
+    .find({ owner: user._id},{} ,{ limit: 20 }, function (err, tids) {
       if (tids.length > 0) {
         Tweet
           .find({ owner: user._id }, function (err, tweets) {
