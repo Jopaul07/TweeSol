@@ -15,12 +15,9 @@ var T = new Twitter({
  var stream = T.stream('user', { track: ['liverpool']});
 
  stream.on('connected', function (response) {
-   console.log("A connection established!..");
  })
 stream.on('tweet', function (tweet) {
-  console.log(tweet.text);
 })
 
 stream.on('error', function (error) {
-  console.log(error);
 });

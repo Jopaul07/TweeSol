@@ -46,13 +46,12 @@ app.use(session(
 ));
 
 app.use(function (req, res, next) {
-  console.log("\nSession Init\n");
   res.locals.session = req.session;
   next();
 });
 app.use('/', index);
 app.use('/users', users);
-
+mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/tweesol');
 // app.get('*', function(req, res){
 //     res.redirect('/home');
