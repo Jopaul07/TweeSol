@@ -244,7 +244,6 @@
                                       chrome: 'noscrollbar',
         
                                     }).then(function (el) {
-                                      console.log('Embedded a timeline.')
                                     });
                                 });
                               });
@@ -279,8 +278,6 @@
         
                                 $('#twitid_but').click(function () {
                                   var twitid = $('#twitid').val();
-                                  console.log(twitid);
-        
         
                                   $.post("/twitid", { twitidn: twitid }, function (response) {
         
@@ -306,8 +303,6 @@
                                 $('.tweetListItem').click(function () {
                                   var id = $(this).attr('id');
                                   var clickedBtn = $('#' + id);
-        
-                                  console.log($(clickedBtn[0]).parent(".tlist")[0].childNodes[0].nodeValue.trim());
                                   var del_tweet = $(clickedBtn[0]).parent(".tlist")[0].childNodes[0].nodeValue.trim();
                                   $.ajax({
                                     url: "/tweets",

@@ -9,8 +9,5 @@ csv
     user_list.push(data);
 })
 .on("end", () => {
-    console.log(user_list);
-  console.log(user_list[1].screen_name);
-  // > 4187
 });
 

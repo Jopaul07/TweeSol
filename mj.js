@@ -84,14 +84,9 @@ T.get('users/lookup',{screen_name:'mjzacharias'},function(err,data,response){
  var stream = T.stream('user', { track: ['jopaul_jn']});
 
  stream.on('connected', function (response) {
-   console.log("A connection established!..");
  })
 stream.on('tweet', function (tweet) {
-  console.log(tweet.text);
-  console.log(tweet.user.name);
-  
 })
 
 stream.on('error', function (error) {
-  console.log(error);
 });

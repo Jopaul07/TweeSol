@@ -277,9 +277,6 @@
 
       $('#twitid_but').click(function () {
         var twitid = $('#twitid').val();
-        console.log(twitid);
-
-
         $.post("/twitid", { twitidn: twitid }, function (response) {
 
           window.location = "/home";
@@ -303,7 +300,6 @@
       });
       $('.twitListItem').click(function () {
         var del_twitid = $(this).attr('id').replace("twitid_", "");
-        console.log(del_twitid);
         $.ajax({
           url: "/twitids",
           type: 'DELETE',
@@ -335,7 +331,6 @@
           url: "/home/tweeting",
           type: 'get',
           success: function (result) {
-            console.log(result);
           },
           error: function (err) {
             console.log(err);

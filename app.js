@@ -14,6 +14,9 @@ var app = express();
 app.io = io;
 var index = require('./routes/index');
 var users = require('./routes/users');
+
+const MongoStore = require('connect-mongo')(session);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -30,19 +33,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 //in git'ile
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(logger({ path: "log/express.log" }));
+app.use(logger("combined", { path: "log/express.log" }));
 app.use(cookieParser());
-app.use(session({ secret: "very secret", resave: false, cookie: { maxAge: 6000000 }, saveUninitialized: true }));
+app.use(session(
+  {
+    secret: "very secret",
+    resave: false,
+    cookie: { maxAge: 6000000 },
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+  }
+));
 
 app.use(function (req, res, next) {
-  console.log("\nSession Init\n");
   res.locals.session = req.session;
   next();
 });
 app.use('/', index);
 app.use('/users', users);
-
-mongoose.connect('mongodb://localhost/tweesol');
+mongoose.Promise = Promise;
+mongoose.connect('mongodb://localhost/tweesol', { useMongoClient: true });
 // app.get('*', function(req, res){
 //     res.redirect('/home');
 // });
