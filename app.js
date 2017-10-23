@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //in git'ile
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(logger({ path: "log/express.log" }));
+app.use(logger("combined", { path: "log/express.log" }));
 app.use(cookieParser());
 app.use(session(
   {
@@ -52,7 +52,7 @@ app.use(function (req, res, next) {
 app.use('/', index);
 app.use('/users', users);
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/tweesol');
+mongoose.connect('mongodb://localhost/tweesol', { useMongoClient: true });
 // app.get('*', function(req, res){
 //     res.redirect('/home');
 // });
