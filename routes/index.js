@@ -86,10 +86,10 @@ router.post('/home', (req, res, next) => {
         }
         Twitid.create(twitIDArray)
           .then((objects) => {
-            
+
           })
           .catch((err) => {
-            
+
           });
         user_list = [];
       });
@@ -112,7 +112,7 @@ router.get('/sessions/connect', function (req, res) {
 
       req.session.oauthRequestToken = oauthToken;
       req.session.oauthRequestTokenSecret = oauthTokenSecret;
-      res.redirect("https://twitter.com/oauth/authorize?oauth_token=" + req.session.oauthRequestToken);
+      res.redirect("https://twitter.com/oauth/authorize?oauth_token=" + req.session.oauthRequestToken+"&oauth_callback="+encodeURIComponent("http://tweesol.mjzac.com/sessions/callback"));
     }
   });
 });
@@ -231,7 +231,7 @@ router.get('/home', function (req, res) {
   var td = [];
   var tw = [];
   Twitid
-    .find({ owner: user._id},{} ,{ limit: 20 }, function (err, tids) {
+    .find({ owner: user._id }, {}, { limit: 20 }, function (err, tids) {
       if (tids.length > 0) {
         Tweet
           .find({ owner: user._id }, function (err, tweets) {
@@ -294,7 +294,7 @@ let startCronJob = (ownerID) => {
                     else {
                       Twitid.findByIdAndRemove({ _id: doc._id })
                         .then((docc) => {
-                          
+
                         })
                     }
                   });
