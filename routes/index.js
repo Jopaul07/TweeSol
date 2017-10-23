@@ -46,9 +46,7 @@ var storage = multer.diskStorage({
 /** testing IO 
  */
 io.on('connection', function (socket) {
-  console.log('A user connected!!!!!!!!!!!!!!!!!!!!!!!!');
   socket.on('disconnect', function () {
-    console.log('user disconnected!!!!!!!!!!!!!!');
   });
 });
 
@@ -67,9 +65,7 @@ router.post('/home', (req, res, next) => {
     }
   }).single('userFile');
   upload(req, res, function (err) {
-    console.log(req.file);
     var loc = req.file.destination + "/" + req.file.filename;
-    console.log(loc);
     var stream = fs.createReadStream(loc);
     var i = 0;
     csv
@@ -90,10 +86,10 @@ router.post('/home', (req, res, next) => {
         }
         Twitid.create(twitIDArray)
           .then((objects) => {
-            console.log("success!!!!");
+            
           })
           .catch((err) => {
-            console.log("error!!!", err);
+            
           });
         user_list = [];
       });
@@ -116,17 +112,12 @@ router.get('/sessions/connect', function (req, res) {
 
       req.session.oauthRequestToken = oauthToken;
       req.session.oauthRequestTokenSecret = oauthTokenSecret;
-      console.log("Double check on 2nd step");
       res.redirect("https://twitter.com/oauth/authorize?oauth_token=" + req.session.oauthRequestToken);
     }
   });
 });
 
 router.get('/sessions/callback', function (req, res) {
-  console.log("------------------------");
-  console.log(">>" + req.session.oauthRequestToken);
-  console.log(">>" + req.session.oauthRequestTokenSecret);
-  console.log(">>" + req.query.oauth_verifier);
   consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function (error, oauthAccessToken, oauthAccessTokenSecret, result) {
     if (error) {
       res.send("Error getting OAuth access token : " + inspect(error) + "[" + oauthAccessToken + "]" + "[" + oauthAccessTokenSecret + "]" + "[" + inspect(result) + "]", 500);
@@ -135,7 +126,6 @@ router.get('/sessions/callback', function (req, res) {
       req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
       consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, result) {
         if (error) {
-          //console.log(error)
           return res.redirect('/sessions/connect');
         }
         var parsedData = JSON.parse(data);
@@ -195,7 +185,6 @@ router.post('/twitid', (req, res, next) => {
       .then((tweet) => {
         // set the session and redirect to dashboard
         if (tweet) {
-          console.log('Twitter Recepient Added:: ', tweet);
         }
         return res.status(200).json({
           tweet: tweet
@@ -218,7 +207,6 @@ router.post('/twitid', (req, res, next) => {
 router.get('/live-zone', function (req, res, next) {
   if (req.session.loggedInUser) {
     let user = req.session.loggedInUser;
-    console.log(user);
     res.render('pages/live-zone', { username: user.username });
   }
   else {
@@ -273,7 +261,6 @@ router.get('/home', function (req, res) {
 var twitterClients = {};
 var cronJobs = {};
 let startCronJob = (ownerID) => {
-  console.log("start cronjob");
   if (cronJobs[ownerID]) {
     cronJobs[ownerID].stop();
     cronJobs[ownerID].start();
@@ -284,7 +271,6 @@ let startCronJob = (ownerID) => {
           if (!doc) {
             let stat = "NO ids left";
             cronJobs[ownerID].stop();
-            console.log("No Tweet-Ids left in DB to Tweet");
 
           }
           // Called once for every document
@@ -301,7 +287,6 @@ let startCronJob = (ownerID) => {
                   // Tada! random tweet
                   var statusk = "@" + doc.screen_name + " ";
                   var realstat = statusk + result.tweetcont;
-                  console.log("tweeting to ", doc.screen_name)
                   twitterClients[ownerID].post('statuses/update', { status: realstat }, function (err, data, response) {
                     if (err) {
                       console.log("There was a problem tweeting the message.", err);
@@ -309,7 +294,7 @@ let startCronJob = (ownerID) => {
                     else {
                       Twitid.findByIdAndRemove({ _id: doc._id })
                         .then((docc) => {
-                          console.log("doc deleted" + docc);
+                          
                         })
                     }
                   });
@@ -339,15 +324,6 @@ router.get('/home/tweestop', (req, res, next) => {
   stopCronjob(userID);
   res.json({ message: "Tweeting stopped." });
 })
-function tweeting(req) {
-  // Get the count of all users
-  if (req.session.loggedInUser) {
-    console.log("inside functn" + req);
-    return req;
-  }
-
-
-}
 
 router.post('/tweet', (req, res) => {
   if (req.session.loggedInUser) {
@@ -367,9 +343,6 @@ router.post('/tweet', (req, res) => {
       })
       .then((tweet) => {
         // set the session and redirect to dashboard
-        if (tweet) {
-          console.log('Tweet created:: ', tweet);
-        }
         return res.status(200).json({
           tweet: tweet
         });
