@@ -18,10 +18,15 @@ var History = require('../models/user').History;
 // Get your credentials here: https://dev.twitter.com/apps
 var _twitterConsumerKey = 'pONmNNR1Lz2rkz7OqH3e9eyl0';
 var _twitterConsumerSecret = 'KXcXdICh3rMrpys3KfgYUccAw8JzhXUG8ZW1wwoyFQXiCwJLwA';
-
+let callbackURL = process.env.callbackURL || "http://127.0.0.1:3000/sessions/callback";
 var consumer = new oauth.OAuth(
-  "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token",
-  _twitterConsumerKey, _twitterConsumerSecret, "1.0A", "http://127.0.0.1:3000/sessions/callback", "HMAC-SHA1");
+  "https://twitter.com/oauth/request_token", 
+  "https://twitter.com/oauth/access_token",
+  _twitterConsumerKey, 
+  _twitterConsumerSecret,
+   "1.0A", 
+   callbackURL, 
+   "HMAC-SHA1");
 
 var Twitter = require('twit');
 
@@ -112,7 +117,7 @@ router.get('/sessions/connect', function (req, res) {
 
       req.session.oauthRequestToken = oauthToken;
       req.session.oauthRequestTokenSecret = oauthTokenSecret;
-      res.redirect("https://twitter.com/oauth/authorize?oauth_token=" + req.session.oauthRequestToken+"&oauth_callback="+encodeURIComponent("http://tweesol.mjzac.com/sessions/callback"));
+      res.redirect("https://twitter.com/oauth/authorize?oauth_token=" + req.session.oauthRequestToken);
     }
   });
 });
