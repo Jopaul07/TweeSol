@@ -27,6 +27,8 @@
 
         }(document, "script", "twitter-wjs"));
     </script>
+    <script>
+    </script>
 </head>
 
 <body>
@@ -109,7 +111,7 @@
                                 Live-Zone
                             </a>
                         </li>
-                        
+
                         <li id="faq-menu">
                             <a href="">
                                 <i class="glyphicon glyphicon-paperclip"></i>
@@ -143,10 +145,7 @@
                     </div>
                     <div class="container">
                         <div class="col-md-8" id="timeline" style="margin-top: 1em">
-                            <blockquote class="twitter-tweet" data-lang="en" style="box-sizing: content-box">
-                                <p lang="en" dir="ltr">just setting up my twttr.Write spmething so that i can see the column lenght increases as
-                                    i write more data .so keep the fck up write some bullshit.</p>&mdash; Jack (@jack) SS
-                            </blockquote>
+                            <!-- sttreaming tweets -->
                         </div>
                         <div class="col-md-2"></div>
                         <div class="col-md-2"></div>
@@ -162,9 +161,23 @@
 
     </div>
     <!-- jQuery CDN -->
+    <!-- socket test -->
     <script src="/socket.io/socket.io.js"></script>
     <script> 
-      var socket = io();
+        var socket = io('/<%-username%>');
+        socket.on('tweet', function (data) {
+            console.log(data.tweet);
+            console.log(data.sender);
+            if (data.sender === '<%-username%>') {
+                $('div').find('#timeline').prepend("<blockquote class=\"twitter-tweet\" data-lang=\"en\" style=\"box-sizing: content-box;background-color: darkslategrey;\"><p lang=\"en\" dir=\"ltr\" class=\"text\"></p><p class=\"sender\" style=\"color:black\"></p></blockquote>");    
+            }
+            else{
+                $('div').find('#timeline').prepend("<blockquote class=\"twitter-tweet\" data-lang=\"en\" style=\"box-sizing: content-box\"><p lang=\"en\" dir=\"ltr\" class=\"text\"></p><p class=\"sender\" style=\"color:black\"></p></blockquote>");
+            }
+
+            $('#timeline .twitter-tweet .text').first().html(data.tweet);
+            $('#timeline .twitter-tweet .sender').first().html("&mdash;@" + data.sender);
+        });
     </script>
 
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>

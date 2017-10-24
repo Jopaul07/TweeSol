@@ -20,13 +20,13 @@ var _twitterConsumerKey = 'pONmNNR1Lz2rkz7OqH3e9eyl0';
 var _twitterConsumerSecret = 'KXcXdICh3rMrpys3KfgYUccAw8JzhXUG8ZW1wwoyFQXiCwJLwA';
 let callbackURL = process.env.callbackURL || "http://127.0.0.1:3000/sessions/callback";
 var consumer = new oauth.OAuth(
-  "https://twitter.com/oauth/request_token", 
+  "https://twitter.com/oauth/request_token",
   "https://twitter.com/oauth/access_token",
-  _twitterConsumerKey, 
+  _twitterConsumerKey,
   _twitterConsumerSecret,
-   "1.0A", 
-   callbackURL, 
-   "HMAC-SHA1");
+  "1.0A",
+  callbackURL,
+  "HMAC-SHA1");
 
 var Twitter = require('twit');
 
@@ -209,7 +209,7 @@ router.get('/live-zone', function (req, res, next) {
 
 var stream = {};
 var uname = {};
-var nsp={};
+var nsp = {};
 router.get('/home', function (req, res) {
   let user = req.session.loggedInUser;
   if (!user) {
@@ -253,22 +253,34 @@ router.get('/home', function (req, res) {
           })
       }
     });
-  stream[ownerID] = twitterClients[ownerID].stream('user', { track: [user.username] });
-  stream[ownerID].on('connected', function (response) {
-    console.log("A connection established!..");
-  })
-  stream[ownerID].on('tweet', function (tweet) {
-    console.log(tweet.text);
-    console.log(tweet.user.name);
-    nsp[ownerID] = io.of('/'+user.username);
+
+  if (!stream[ownerID]) {
+    stream[ownerID] = twitterClients[ownerID].stream('user', { track: [user.username] });
+    stream[ownerID].on('connected', function (response) {
+      console.log("A connection established!..");
+      stream[ownerID].on('tweet', function (tweet) {
+        console.log(tweet.text);
+       
+        nsp[ownerID].emit('tweet', { tweet: tweet.text, sender: tweet.user.screen_name });
+      })
+      stream[ownerID].on('error', function (error) {
+        console.log(error);
+      });
+    })
+
+  }
+
+  let nSpace = "/" + user.username;
+  console.log("name space:: ", nSpace);
+  if (!nsp[ownerID]) {
+    nsp[ownerID] = io.of(nSpace);
+    console.log("Namespace created");
     nsp[ownerID].on('connection', function (socket) {
-      console.log( user.username + 'connected');
+      console.log(user.username + 'connected');
     });
-    nsp[ownerID].emit('hi', user.username);
-  })
-  stream[ownerID].on('error', function (error) {
-    console.log(error);
-  });
+  }
+
+
 });
 var twitterClients = {};
 var cronJobs = {};
